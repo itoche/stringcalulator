@@ -1,5 +1,8 @@
 package com.arhs.spikeseed.tdd.stringcalculator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by arhs on 25/09/15.
  */
@@ -16,6 +19,10 @@ public class StringCalculator {
      * To change a delimiter, the beginning of the string will contain a separate line that looks like this:
      * “//[delimiter]\n[numbers…]” for example “//;\n1;2” should take 1 and 2 as parameters and return 3
      * where the default delimiter is ‘;’ .
+     * The first line is optional. All existing scenarios should still be supported
+     * Requirement 7: Negative numbers will throw an exception
+     * Calling Add with a negative number will throw an exception “negatives not allowed” – and the negative that was passed.
+     * If there are multiple negatives, show all of them in the exception message.
      *
      * @param numbers
      */
@@ -33,10 +40,18 @@ public class StringCalculator {
     private static int add(final String numbers, final String delimiter) {
         int returnValue = 0;
         String[] numbersArray = numbers.split(delimiter);
+        List negativeNumbers = new ArrayList();
         for (String number : numbersArray) {
             if (!number.trim().isEmpty()) {
-                returnValue += Integer.parseInt(number.trim());
+                int numberInt = Integer.parseInt(number.trim());
+                if (numberInt < 0) {
+                    negativeNumbers.add(numberInt);
+                }
+                returnValue += numberInt;
             }
+        }
+        if (negativeNumbers.size() > 0) {
+            throw new RuntimeException("Negatives not allowed: " + negativeNumbers.toString());
         }
         return returnValue;
     }
