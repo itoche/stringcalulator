@@ -53,4 +53,11 @@ public class StringCalculatorTest {
     public final void whenNewLineIsUsedBetweenNumbersThenReturnValuesAreTheirSums() {
         Assert.assertEquals(3+6+15, StringCalculator.add("3,6n15"));
     }
+
+    // Requirement 6: Support different delimiters
+
+    @Test
+    public final void whenDelimiterIsSpecifiedThenItIsUsedToSeparateNumbers() {
+        Assert.assertEquals(3+6+15, StringCalculator.add("//;n3;6;15"));
+    }
 }
