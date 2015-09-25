@@ -23,6 +23,7 @@ public class StringCalculator {
      * Requirement 7: Negative numbers will throw an exception
      * Calling Add with a negative number will throw an exception “negatives not allowed” – and the negative that was passed.
      * If there are multiple negatives, show all of them in the exception message.
+     * Requirement 8: Numbers bigger than 1000 should be ignored
      *
      * @param numbers
      */
@@ -46,8 +47,9 @@ public class StringCalculator {
                 int numberInt = Integer.parseInt(number.trim());
                 if (numberInt < 0) {
                     negativeNumbers.add(numberInt);
+                } else if (numberInt <= 1000) {
+                    returnValue += numberInt;
                 }
-                returnValue += numberInt;
             }
         }
         if (negativeNumbers.size() > 0) {
