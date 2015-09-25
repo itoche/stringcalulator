@@ -11,16 +11,16 @@ public class StringCalculator {
      * Requirement 2: For an empty string the method will return 0
      * Requirement 3: Method will return their sum of number
      * Requirement 4: Allow the Add method to handle an unknown amount of numbers
+     * Requirement 5: Allow the Add method to handle new lines between numbers (instead of commas)
      *
      * @param numbers
      */
     public static int add(final String numbers) {
         int returnValue = 0;
-        String[] numbersArray = numbers.split(",");
-
+        String[] numbersArray = numbers.split(",|n"); // Added |n to the split regex
         for (String number : numbersArray) {
-            if (!number.trim().isEmpty()) { // After refactoring
-                returnValue += Integer.parseInt(number);
+            if (!number.trim().isEmpty()) {
+                returnValue += Integer.parseInt(number.trim());
             }
         }
         return returnValue;
