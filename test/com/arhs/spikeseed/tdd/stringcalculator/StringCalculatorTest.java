@@ -13,10 +13,6 @@ public class StringCalculatorTest {
     // Requirement 1: The method can take 0, 1 or 2 numbers, and will return their sum (for an empty string it will return 0) for example “” or “1” or “1,2”
 
 
-    @Test(expected = RuntimeException.class)
-    public final void whenMoreThan2NumbersAreUsedThenExceptionIsThrown() {
-        StringCalculator.add("1,2,3");
-    }
     @Test
     public final void when2NumbersAreUsedThenNoExceptionIsThrown() {
         StringCalculator.add("1,2");
@@ -42,5 +38,12 @@ public class StringCalculatorTest {
     @Test
     public final void whenTwoNumbersAreUsedThenReturnValueIsTheirSum() {
         Assert.assertEquals(3+6, StringCalculator.add("3,6"));
+    }
+
+    // Requirement 4: Allow the Add method to handle an unknown amount of numbers
+
+    @Test
+    public final void whenAnyNumberOfNumbersIsUsedThenReturnValuesAreTheirSums() {
+        Assert.assertEquals(3+6+15+18+46+33, StringCalculator.add("3,6,15,18,46,33"));
     }
 }
