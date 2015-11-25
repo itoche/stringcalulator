@@ -1,0 +1,14 @@
+PROJECT_NAME=myproject
+SHA1=$(git rev-parse HEAD)
+
+function build_setup() {
+    # Run a data container to expose the secrets
+    docker run -d --name=$PROJECT_NAME.secrets.$SHA1 $PROJECT_NAME.secrets
+}
+
+function build_teardown() {
+	echo "Dropping data container run as daemon"
+	docker rm -f $PROJECT_NAME.secrets.$SHA1
+}
+
+DOCKER_BUILD_ARGS="--volumes-from $PROJECT_NAME.secrets.$SHA1"
