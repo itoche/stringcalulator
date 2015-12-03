@@ -10,6 +10,7 @@ fi
 export SHA1=$SHA1
 export DEPLOYMENT_ID=interactive
 export COMPOSE_PROJECT_NAME=$PROJECT_NAME$DEPLOYMENTID$SHA1
+docker network create $PROJECT_NAME || true
 docker-compose --x-networking kill || true
 docker-compose --x-networking rm -f || true
 docker-compose --x-networking up
