@@ -10,13 +10,19 @@ source ./configrc
 rm -rf artifacts
 mkdir artifacts
 
-build_setup
+if [ -n "$(type -t build_setup)" ] && [ "$(type -t build_setup)" = function ]
+then
+    build_setup
+fi
 
 # Make sure we set the permissions right upon exit
 function finish {
 	echo "Making sure permissions on artifacts are ok"
 	docker run --rm -v $PWD/artifacts:/artifacts busybox chown -R $(id -u $USER):$(id -g $USER) /artifacts
-    build_teardown
+    if [ -n "$(type -t build_teardown)" ] && [ "$(type -t build_teardown)" = function ]
+    then
+        build_teardown
+    fi
 }
 trap finish EXIT
 
