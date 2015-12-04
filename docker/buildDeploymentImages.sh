@@ -23,10 +23,17 @@ do
     then
     	./setup.sh
     fi
+    set +e
 	docker build -t $PROJECT_NAME.deploy.$envName:$SHA1 .
+    BUILD_SUCCESS=$?
     if [ -e teardown.sh ]
     then
         ./teardown.sh
+    fi
+    set -e
+    if [ $BUILD_SUCCESS != 0 ]
+    then
+        exit 1
     fi
 	cd ../..
 done
