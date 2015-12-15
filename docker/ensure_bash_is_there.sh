@@ -10,4 +10,5 @@ else
   else
     echo "No luck, I cannot help"
     exit 1
+  fi
 fi
