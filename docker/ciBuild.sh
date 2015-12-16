@@ -1,5 +1,9 @@
 #!/bin/bash -x
 
+# Enforce script failure upon any error
+set -e
+set -o pipefail
+
 # Make sure we are in the right directory
 cd `dirname $0`
 
@@ -25,10 +29,6 @@ function finish {
     fi
 }
 trap finish EXIT
-
-# Enforce script failure upon any error
-set -e
-set -o pipefail
 
 ENVIRONMENTS=`ls buildEnvironments`
 # You can filter which build environment(s) you wanna use
