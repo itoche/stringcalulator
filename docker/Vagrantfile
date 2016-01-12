@@ -1,7 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 Vagrant.configure(2) do |config|
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "ubuntu/bento-trusty64"
+  config.vm.box_url= "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box"
   config.vm.synced_folder "..", "/repository"
   config.vm.network "private_network", type: "dhcp"
   config.vm.provider "virtualbox" do |vb|
@@ -10,15 +11,17 @@ Vagrant.configure(2) do |config|
   end
   config.vm.provision "shell", inline: <<-SHELL
     set -e
-    sudo sed -i 's,http://archive,http://de.archive,g' /etc/apt/sources.list
+    set -o pipefail
+    sudo sed -i 's,http://us.archive,http://de.archive,g' /etc/apt/sources.list
+    export DEBIAN_FRONTEND=noninteractive
+	sudo apt-get update
+    sudo apt-get install -y dnsmasq curl
+    sudo echo "interface=docker0" > /etc/dnsmasq.conf
+    sudo service dnsmasq restart
     if [ ! -f /usr/bin/docker ]
     then
         curl -sSL https://get.docker.com | sudo sh
     fi
-    export DEBIAN_FRONTEND=noninteractive
-    sudo apt-get install -y dnsmasq
-    sudo echo "interface=docker0" > /etc/dnsmasq.conf
-    sudo service dnsmasq restart
     sudo echo 'DOCKER_OPTS="--dns 172.17.0.1"' > /etc/default/docker
     sudo service docker restart
     if [ ! -f /usr/local/bin/docker-compose ]
