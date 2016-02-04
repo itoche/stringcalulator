@@ -12,7 +12,11 @@ else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror")
 endif()
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+if(CMAKE_COMPILER_IS_GNUCXX)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+endif()
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
@@ -35,7 +39,9 @@ target_link_libraries(test_${PROJECT_NAME} ${PROJECT_NAME})
 
 if(UNIX)
     set_target_properties(test_${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-Wno-missing-field-initializers")
-    target_link_libraries(test_${PROJECT_NAME} pthread)
+    if(CMAKE_COMPILER_IS_GNUCXX)
+        target_link_libraries(test_${PROJECT_NAME} pthread)
+    endif()
 endif()
 
 enable_testing()
