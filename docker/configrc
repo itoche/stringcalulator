@@ -1,0 +1,2 @@
+PROJECT_NAME=stringcalculator
+SHA1=$(git rev-parse HEAD)

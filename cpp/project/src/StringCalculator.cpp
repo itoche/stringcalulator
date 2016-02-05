@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <sstream>
+#include <stdexcept>
 
 int StringCalculator::add(const std::string& numbers) {
 	std::string delimiter = ",n";

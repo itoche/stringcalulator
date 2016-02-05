@@ -39,9 +39,7 @@ target_link_libraries(test_${PROJECT_NAME} ${PROJECT_NAME})
 
 if(UNIX)
     set_target_properties(test_${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-Wno-missing-field-initializers")
-    if(CMAKE_COMPILER_IS_GNUCXX)
-        target_link_libraries(test_${PROJECT_NAME} pthread)
-    endif()
+     target_link_libraries(test_${PROJECT_NAME} pthread)
 endif()
 
 enable_testing()
